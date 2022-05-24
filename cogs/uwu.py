@@ -1,18 +1,18 @@
 import discord
-from discord.ext.commands import Cog, command
+from discord.ext.commands import Cog, command, Context
 import re, random
 
-def setup(bot):
+def setup(bot: discord.Bot):
 	bot.add_cog(Uwu(bot))
 
 class Uwu(Cog):
 	"""uwu-ify some text"""
-	def __init__(self, bot):
-		self.bot = bot
+	def __init__(self, bot: discord.Bot):
+		self.bot: discord.Bot = bot
 		print("Initialized Uwu cog")
 
 	@command()
-	async def uwu(self, ctx, *, text: str = None):
+	async def uwu(self, ctx: Context, *, text: str = None):
 		"""uwu-ify some text
 
 		If no text is included and the message is a reply,
@@ -46,8 +46,8 @@ class Uwu(Cog):
 		text = re.sub('ma', 'mwa', text)
 		text = re.sub('mu', 'mwu', text)
 		text = re.sub('mo', 'mwo', text)
-		text = re.sub('ha[sv]e?', 'haz', text)
-		text = re.sub('the ', 'da ', text)
-		text = re.sub('this ', 'dis ', text)
+		text = re.sub('\bha[sv]e?\b', 'haz', text)
+		text = re.sub('\bthe\b', 'da', text)
+		text = re.sub('\bthis\b', 'dis', text)
 		text += random.choice(suffixes)
 		await ctx.send(text)

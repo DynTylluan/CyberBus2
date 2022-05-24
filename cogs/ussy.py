@@ -2,22 +2,22 @@ import discord
 from discord.ext.commands import Cog
 import re
 
-def setup(bot):
+def setup(bot: discord.Bot):
 	bot.add_cog(Ussy(bot))
 
 class Ussy(Cog):
 	"""Negative reinforcement for alph's brain"""
-	def __init__(self, bot):
-		self.bot = bot
+	def __init__(self, bot: discord.Bot):
+		self.bot: discord.Bot = bot
 		print("Initialized Ussy cog")
 
 	@Cog.listener()
-	async def on_message(self, message):
+	async def on_message(self, message: discord.Message):
 		if message.author.id == self.bot.user.id:
 			return
 		r = re.compile(
 			r'''
-			\b.*ussy\b
+			\b[a-zA-Z]*ussy\b
 			''',
 			re.VERBOSE | re.IGNORECASE
 			)
