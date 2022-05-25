@@ -1,3 +1,5 @@
+# Owly in this cog is Cass Python of @DynTylluan on GitHub
+
 import discord
 from discord.ext.commands import Cog
 from os import path, makedirs
@@ -37,14 +39,14 @@ class BTMoment(Cog):
 	async def on_voice_state_update(self, member: discord.Member, before: discord.VoiceState, after: discord.VoiceState):
 		if member.id != 257945316479729665: # ignore everyone except cass
 			return
-		if not after.channel: # ignore leaving -- only check for join or move
+		if not after.channel: # Ignore leaving -- only check for join or move
 			return
 		
 		logger.debug("owly joined vc")
 
 		history = await self.channel.history(limit=2).flatten()
-		m2 = history[1] # second-to-last message
-		m1 = history[0] # last message
+		m2 = history[1] # Second-to-last message
+		m1 = history[0] # Last message
 		if m1.embeds:
 			logger.debug(f"{m1.embeds[0].author.name=}")
 			logger.debug(f"{m1.embeds[0].description=}")
@@ -57,7 +59,7 @@ class BTMoment(Cog):
 
 		bt_moment = False
 
-		if ( # last 2 messages from ricky had embeds where owly left then joined
+		if ( # Last 2 messages from Ricky had embeds where Owly left then joined
 			m2.author.id == m1.author.id
 			and m2.author.id == self.bot.user.id
 			and m2.embeds
@@ -71,7 +73,7 @@ class BTMoment(Cog):
 		):
 			logger.info("BTMoment event was received after VCJoin event")
 			bt_moment = True
-		elif ( # last message from ricky had embed where owly left
+		elif ( # Last message from ricky had embed where Owly left
 			m1.author.id == self.bot.user.id
 			and m1.embeds
 			and "left" in m1.embeds[0].description
@@ -88,4 +90,3 @@ class BTMoment(Cog):
 		msg = await self.channel.send("BT moment")
 		if msg:
 			logger.info("Message sent: BT moment")
-
