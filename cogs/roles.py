@@ -59,6 +59,7 @@ class Roles(Cog):
 		'PRONOUN_HE': 692142321268949073,
 		'PRONOUN_SHE': 725562073420922962,
 		'PRONOUN_THEY': 692142321072078918,
+		'PRONOUN_IT': 957503413275467826,		
 	}
 
 	@Cog.listener()
@@ -71,12 +72,15 @@ class Roles(Cog):
 				# 👨 = He/Him
 				# 👩 = She/Her
 				# 🧑 = They/Them
+				# 😏 = It/Its
 				case '👨':
 					role = guild.get_role(self.roles['PRONOUN_HE'])
 				case '👩':
 					role = guild.get_role(self.roles['PRONOUN_SHE'])
 				case '🧑':
 					role = guild.get_role(self.roles['PRONOUN_THEY'])
+				case '😏':
+					role = guild.get_role(self.roles['PRONOUN_IT'])
 		if payload.message_id == 952510538552868884: # ping roles
 			match payload.emoji.name:
 				# 📢 = Announcement Ping
