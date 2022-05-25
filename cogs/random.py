@@ -71,7 +71,7 @@ class Random(Cog):
 	def flip_results(number: int = 1) -> str:
 		"""Returns a formatted result of Heads and Tails counts"""
 		result = Random.flip(number)
-		if len(result) == 6: # \n counts as a character and we don't strip it
+		if len(result) == 6: # \n Counts as a character and we don't strip it
 			return (
 				f"*You flipped {number} coins and got:*\n"
 				f"**{result}**"
