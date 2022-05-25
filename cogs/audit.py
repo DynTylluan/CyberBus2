@@ -50,7 +50,7 @@ class Audit(Cog):
 			]
 		):
 			logger.info("on_message_delete ignored\n")
-			return # ignore deleted messages from the above members
+			return # Ignore deleted messages from the above members
 
 		msg = await self.channel.send(
 			embed = discord.Embed(
