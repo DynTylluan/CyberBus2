@@ -1,12 +1,12 @@
 import discord
 from discord.ext.commands import Cog, command, Context
 from discord.ext.pages import Paginator
-import asyncio # used to run async functions within regular functions
-import subprocess # for running ffprobe and getting duration of files
+import asyncio # Used to run async functions within regular functions
+import subprocess # For running ffprobe and getting duration of files
 from os import getenv, path, makedirs
-from time import time # performance tracking
-import random # for shuffling the queue
-import math # for ceiling function in queue pages
+from time import time # Performance tracking
+import random # For shuffling the queue
+import math # For ceiling function in queue pages
 from functools import partial
 import logging
 
@@ -118,7 +118,7 @@ class Player(discord.PCMVolumeTransformer):
 	
 	@property
 	def elapsed(self) -> float:
-		return self.packets_read * 0.02 # each packet is 20ms
+		return self.packets_read * 0.02 # Each packet is 20ms
 
 	@property
 	def progress(self) -> str:
@@ -162,12 +162,12 @@ class Music(Cog):
 				if msg:
 					logger.info(f"Message sent: no channel specified, and {ctx.author} is not in a voice channel")
 				return
-			channel = ctx.author.voice.channel # bind to your current vc channel.
-		if ctx.voice_client: # If the bot is in a different channel,
-			await ctx.voice_client.move_to(channel) # move to your channel.
+			channel = ctx.author.voice.channel # Bind to your current VC channel
+		if ctx.voice_client: # If the bot is in a different channel
+			await ctx.voice_client.move_to(channel) # Move to your channel
 			logger.info(f"existing voice client moved to {channel}")
 			return
-		voice_client = await channel.connect() # Finally, join the chosen channel.
+		voice_client = await channel.connect() # Finally, join the chosen channel
 		if voice_client:
 			logger.info("voice client created")
 	
@@ -212,7 +212,7 @@ class Music(Cog):
 		elif tracks := await self.get_tracks_from_path(ctx, query):
 			logger.info(f"getting tracks from path to local file")
 			return tracks
-		# Do a youtube search if not found and no prior search
+		# Do a YouTube search if not found and no prior search
 		elif not self.search_results:
 			logger.info(f"performing a search result")
 			return await self.search_youtube(ctx, query=query)
@@ -244,8 +244,8 @@ class Music(Cog):
 			logger.error(f"{e=}")
 			return e
 		# Detect playlists
-		entries = [data] # Assume that there is only one song.
-		if "entries" in data: # If we're wrong, just overwrite our singlet list.
+		entries = [data] # Assume that there is only one song
+		if "entries" in data: # If we're wrong, just overwrite our singlet list
 			entries = data["entries"] # yapf: disable
 		# Create Track objects
 		tracks = []
@@ -435,7 +435,7 @@ class Music(Cog):
 		logger.info(f"{self.track=}")
 
 		if self.track.source.startswith('http'):
-			# detect private or unplayable videos here
+			# Detect private or unplayable videos here
 			try:
 				data = ytdl.extract_info(self.track.source, download=False)
 				logger.debug(f"{data=}")
@@ -541,7 +541,7 @@ class Music(Cog):
 				"play any tracks."
 				)
 				if msg:
-					logger.info("Message sent: author not in voice, and no voice client exists")
+					logger.info("Message sent: author not in voice and no voice client exists")
 				return
 		# Guard against errors
 		tracks = await self.get_tracks_from_query(ctx, query)
@@ -553,7 +553,7 @@ class Music(Cog):
 			if msg:
 				logger.warning(f"Message sent: An error occurred while trying to add `{query}` to the queue")
 			return
-		if not tracks: # a search was performed instead
+		if not tracks: # A search was performed instead
 			return
 		# Add track(s) to queue
 		if top:
@@ -571,7 +571,7 @@ class Music(Cog):
 				if msg:
 					logger.info(f"Message sent: Added **{len(tracks)}** track(s) to queue.")
 				return
-		# If not playing, start playing
+		# If not playing anything, then start playing
 		if len(self.q) == 1:
 			msg = await ctx.send(f"Playing **{self.q[0].title}**")
 			if msg:
@@ -604,45 +604,45 @@ class Music(Cog):
 		logger.info(f".playtop {query}")
 		return await self.add_to_queue(ctx, query, top=True)
 	
-	# TODO: repeat once, repeat all, repeat none (repeat/loop command)
-	# TODO: move positions of songs?
-	# TODO: cleanup command for clearing songs requested by users not in vc?
-	# TODO: remove duplicates?
-	# TODO: remove range of songs
-	# TODO: restart current song
-	# TODO: seek command? [no fuckin idea how]
-	# TODO: skip multiple songs?
-	# TODO: autoplay???? [???????????]
-	# TODO: filters? bass boost? nightcore? speed? [probs not]
+	# TODO: Repeat once, repeat all, repeat none (repeat/loop command)
+	# TODO: Move positions of songs?
+	# TODO: Cleanup command for clearing songs requested by users not in vc?
+	# TODO: Remove duplicates?
+	# TODO: Remove range of songs
+	# TODO: Restart current song
+	# TODO: Seek command? [no fuckin idea how]
+	# TODO: Skip multiple songs?
+	# TODO: Autoplay???? [???????????]
+	# TODO: fFlters? Bass boost? Nightcore? Speed? [Probs not]
 	
 	@command(aliases=['q'])
 	async def queue(self, ctx: Context, p: int = 1):
 		"""Show tracks up next"""
 		logger.info(f".queue {p}" if p else ".queue")
-		# check that there is a queue and a current track
+		# Check that there is a queue and a current track
 		if not self.q and not self.track:
 			msg = await ctx.send("The queue is currently empty.")
 			logger.info("Message sent: The queue is currently empty.")
 			return
-		# paginate the queue to just one page
+		# Paginate the queue to just one page
 		full_queue = [self.track] + self.q
 		start = self.PAGE_SIZE * (p-1)
 		end = self.PAGE_SIZE * p
 		queue_page = full_queue[start:end]
-		# construct header
+		# Construct header
 		formatted_results = f"{len(self.q)} tracks on queue.\n"
 		total_pages = math.ceil(len(full_queue) / self.PAGE_SIZE)
 		formatted_results += f"Page {p} of {total_pages}:\n"
-		# construct page
+		# Construct page
 		for i, track in enumerate(queue_page):
-			if p == 1 and i == 0: # print nowplaying on first queue page
+			if p == 1 and i == 0: # Print nowplaying on first queue page
 				formatted_results += "=== Currently playing ===\n"
 			formatted_results += (
 				f"{start+i+1}: {track}\n"
 			)
-			if p == 1 and i == 0: # add separator on first page for actually queued tracks
+			if p == 1 and i == 0: # Add separator on first page for actually queued tracks
 				formatted_results += "=== Up next ===\n"
-		# send text to channel
+		# Send text to channel
 		msg = await ctx.send(formatted_results)
 		if msg:
 			logger.info("Message sent: Sent queue page to channel")
@@ -703,7 +703,7 @@ class Music(Cog):
 	async def remove(self, ctx: Context, i: int):
 		"""Remove track at given position"""
 		logger.info(f".remove {i}")
-		i -= 1 # convert to zero-indexing
+		i -= 1 # Convert to zero-indexing
 		track = self.q.pop(i)
 		msg = await ctx.send(f"Removed: {track.title}")
 		if msg:
@@ -819,7 +819,7 @@ ytdl_format_options = {
 	"no_warnings": True,
 	"default_search": "auto",
 	# "source_address": "0.0.0.0", # Bind to ipv4 since ipv6 addresses cause issues
-	"extract_flat": True, # massive speedup for fetching metadata, at the cost of no upload date
+	"extract_flat": True, # Massive speedup for fetching metadata, at the cost of no upload date
 }
 username = getenv("YOUTUBE_USERNAME")
 password = getenv("YOUTUBE_PASSWORD")
