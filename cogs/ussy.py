@@ -52,21 +52,21 @@ class Ussy(Cog):
 			# 8 letter words
 			'asspussy', # Vulgar slang highlighting the fuckability of the anus
 			'ass-pussy',
-			'boipussy', # same as above
+			'boipussy', # Same as above
 			'boi-pussy',
-			'boypussy', # same as above
+			'boypussy', # Same as above
 			'boy-pussy',
-			'circussy', # resembling a circus
-			'citrussy', # having citrus-like qualities
-			'henhussy', # a girl who tends chickens
-			'manpussy', # same as boypussy
+			'circussy', # Resembling a circus
+			'citrussy', # Having citrus-like qualities
+			'henhussy', # A girl who tends chickens
+			'manpussy', # Same as boypussy
 			'man-pussy',
 			'nonfussy',
 			# 9 letter words
-			'octopussy', # similar to an octopus
+			'octopussy', # Similar to an octopus
 			'overfussy',
 			# 10 letter words
-			'mouthpussy', # like "asspussy" but for the mouth
+			'mouthpussy', # Like "asspussy" but for the mouth
 			'superpussy',
 			'tussymussy', # Alternate spelling of tussie-mussie, historically used in Victorian times to refer to a nosegay* given by one person to another to convey a message in the language of flowers**. *nosegay = like a small bouquet of flowers intended to be put up to your nose and smelt, **language of flowers = floriography
 			'tussy-mussy',
