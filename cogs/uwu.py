@@ -1,3 +1,6 @@
+# Thank you to Job of joppiesaus.neocities.org for the inspiration to this that was originally used on the old CyberBus bot
+# https://github.com/NeoZones/CyberBus/blob/master/cyberbus.js#L27
+
 import discord
 from discord.ext.commands import Cog, command, Context
 import re, random
