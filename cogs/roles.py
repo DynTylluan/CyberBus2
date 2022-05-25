@@ -103,7 +103,7 @@ class Roles(Cog):
 		guild = self.bot.get_guild(payload.guild_id)
 		member = guild.get_member(payload.user_id)
 		role = None
-		if payload.message_id == 952489920184873030: # pronoun roles
+		if payload.message_id == 952489920184873030: # Pronoun roles
 			match payload.emoji.name:
 				# 👨 = He/Him
 				# 👩 = She/Her
@@ -114,6 +114,8 @@ class Roles(Cog):
 					role = guild.get_role(self.roles['PRONOUN_SHE'])
 				case '🧑':
 					role = guild.get_role(self.roles['PRONOUN_THEY'])
+				case '😏':
+					role = guild.get_role(self.roles['PRONOUN_IT'])
 				case _:
 					role = None
 		if payload.message_id == 952510538552868884: # ping roles
